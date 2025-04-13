@@ -2,37 +2,21 @@ from django.contrib import admin
 from .models import *
 
 
-@admin.register(User)
+@admin.register(PartnerApplication)
 class AdminUser(admin.ModelAdmin):
-    list_display = 'id', 'number', 'is_active'
-    list_display_links = 'id', 'number', 'is_active'
+    list_display = 'id', 'type', 'company_name', 'full_name', 'phone'
 
 
-@admin.register(New)
+@admin.register(PartnerApplicationObjectImage)
 class AdminNew(admin.ModelAdmin):
-    list_display = 'title', 'description'
-    list_display_links = 'title', 'description'
+    list_display = 'id', 'file', 'application',
 
 
-@admin.register(Branch)
+@admin.register(Location)
 class AdminBranch(admin.ModelAdmin):
-    list_display = 'name', 'address', 'start_work', 'end_work'
-    list_display_links = 'name', 'address', 'start_work', 'end_work'
+    list_display = 'id', 'address', 'description', 'region'
 
 
-@admin.register(Certificate)
+@admin.register(PartnerApplicationObject)
 class AdminCertificate(admin.ModelAdmin):
-    list_display = 'description', 'order'
-    list_display_links = 'description', 'order'
-
-
-@admin.register(Category)
-class AdminCategory(admin.ModelAdmin):
-    list_display = 'name',
-    list_display_links = 'name',
-
-
-@admin.register(Product)
-class AdminProduct(admin.ModelAdmin):
-    list_display = 'title', 'price', 'category'
-    list_display_links = 'title', 'price', 'category'
+    list_display = 'id', 'type',
