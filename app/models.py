@@ -163,12 +163,14 @@ class New(models.Model):
     title = models.CharField(max_length=255)
     poster = models.ImageField(upload_to='obj_images/')
     body = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    order = models.IntegerField(default=0)
+    objects = models.Manager()
 
 
 class AboutUs(models.Model):
-    key = models.ImageField(upload_to='obj_image/')
+    key = models.ImageField(upload_to='obj_images/')
     value = models.CharField(max_length=255)
-
     objects = models.Manager()
 
 
@@ -191,7 +193,7 @@ class Feedback(models.Model):
 
 
 class UserEmail(models.Model):
-    email = models.EmailField(max_length=254)
+    email = models.EmailField()
 
 
 class Certificate(models.Model):

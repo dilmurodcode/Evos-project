@@ -42,15 +42,36 @@ class NewSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.New
         fields = (
-            'id', 'title', 'poster', 'body'
+            'id', 'title', 'poster', 'body', 'created_at'
         )
 
 
 class AboutUsSerializer(serializers.ModelSerializer):
-    model = models.AboutUs
-    field = (
-        'id', 'title', 'poster', 'body'
-    )
+
+    class Meta:
+        model = models.AboutUs
+        fields = (
+                'id', 'key', 'value'
+        )
+
+
+
+class UserEmailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.UserEmail
+        fields = (
+            'id', 'email'
+        )
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Feedback
+        fields = (
+            'id', 'full_name', 'text', 'source'
+        )
 
 
 class FAQSerializer(serializers.ModelSerializer):
@@ -62,8 +83,3 @@ class FAQSerializer(serializers.ModelSerializer):
         )
 
 
-class AboutU(serializers.ModelSerializer):
-    model = models.AboutUs
-    fields = (
-        'id', 'key', 'value'
-    )

@@ -80,7 +80,7 @@ class AdminCareer(admin.ModelAdmin):
 
 @admin.register(New)
 class AdminNew(admin.ModelAdmin):
-    list_display = ('id', 'title', 'poster', 'body')
+    list_display = ('id', 'title', 'body', 'order', 'created_at')
 
 
 @admin.register(FAQ)
@@ -90,17 +90,17 @@ class AdminFAQ(admin.ModelAdmin):
 
 @admin.register(Feedback)
 class AdminFeedback(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id', 'full_name')
 
 
 @admin.register(UserEmail)
 class AdminUserEmail(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id', 'email')
 
 
 @admin.register(AboutUs)
 class AdminAboutUS(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id', 'key', 'value')
 
 
 @admin.register(Certificate)

@@ -2,6 +2,7 @@ from rest_framework import generics
 from . import models
 from . import serializers
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 
 class CategoryAPIView(generics.ListAPIView):
@@ -30,7 +31,7 @@ class CategoryProductMixedAPIView(generics.ListAPIView):
 
 
 class NewAPIWView(generics.ListAPIView):
-    queryset = models.New.objects.all()
+    queryset = models.New.objects.all().order_by('-created_at')
     serializer_class = serializers.NewSerializer
     permission_classes = [AllowAny]
 
@@ -38,6 +39,27 @@ class NewAPIWView(generics.ListAPIView):
 class AboutUsAPIView(generics.ListAPIView):
     queryset = models.AboutUs.objects.all()
     serializer_class = serializers.AboutUsSerializer
+
+
+class UserEmailAPIView(generics.CreateAPIView):
+    queryset = models.UserEmail.objects.all()
+    serializer_class = serializers.UserEmailSerializer
+
+    def post(self, request, *args, **kwargs):
+        email = serializers.UserEmailSerializer(data=request.data)
+        if email.is_valid():
+            email.save()
+            return Response(
+                data={'email': 'UserEmail create success'},
+                status=201
+            )
+        return Response('email error')
+
+
+
+class FeedbackAPIView(generics.ListAPIView):
+    queryset = models.Feedback.objects.all()
+    serializer_class = serializers.FeedbackSerializer
 
 
 class FAQAPIView(generics.ListCreateAPIView):
