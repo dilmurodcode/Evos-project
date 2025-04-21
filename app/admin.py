@@ -4,7 +4,7 @@ from .models import *
 
 @admin.register(PartnerApplication)
 class AdminUser(admin.ModelAdmin):
-    list_display = 'id', 'type', 'company_name', 'full_name', 'phone'
+    list_display = 'id', 'app_type', 'company_name', 'full_name', 'phone'
 
 
 @admin.register(PartnerApplicationObjectImage)
@@ -20,3 +20,89 @@ class AdminBranch(admin.ModelAdmin):
 @admin.register(PartnerApplicationObject)
 class AdminCertificate(admin.ModelAdmin):
     list_display = 'id', 'type',
+
+
+@admin.register(User)
+class AdminUser(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(UserLocation)
+class AdminUserLocation(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(UserCard)
+class AdminUserCard(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(Vacancy)
+class AdminVacancy(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(VacancyApplication)
+class AdminVacancyApplication(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(Category)
+class AdminCategory(admin.ModelAdmin):
+    list_display = ('id', 'name', 'order')
+    ordering = ['order']
+
+
+@admin.register(Product)
+class AdminProduct(admin.ModelAdmin):
+    list_display = ('id', 'name', 'image', 'description', 'price', 'discount_price', 'category')
+
+
+@admin.register(Order)
+class AdminOrder(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(OrderProduct)
+class AdminOrderProduct(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(Branch)
+class AdminBranch(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(Career)
+class AdminCareer(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(New)
+class AdminNew(admin.ModelAdmin):
+    list_display = ('id', 'title', 'poster', 'body')
+
+
+@admin.register(FAQ)
+class AdminFAQ(admin.ModelAdmin):
+    list_display = ('id', 'question', 'answer')
+
+
+@admin.register(Feedback)
+class AdminFeedback(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(UserEmail)
+class AdminUserEmail(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(AboutUs)
+class AdminAboutUS(admin.ModelAdmin):
+    list_display = 'id',
+
+
+@admin.register(Certificate)
+class AdminCertificate(admin.ModelAdmin):
+    list_display = 'id',

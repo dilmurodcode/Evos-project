@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +23,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'app',
+    'drf_spectacular',
 ]
+
+
+REST_FRAMEWORK = {
+   'DEFAULT_SCHEMA_CLASS' : 'drf_spectacular.openapi.AutoSchema' ,
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -89,6 +97,37 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'simple': {
+            'format': '{levelname} {asctime} {message}',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        'order_delete': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'deleted_orders.log'),
+            'formatter': 'simple',
+        },
+    },
+
+    'loggers': {
+        'order_delete_logger': {
+            'handlers': ['order_delete'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+}
 
 
 

@@ -1,28 +1,69 @@
+from . import models
 from rest_framework import serializers
-from .models import *
 
+class CategorySerializer(serializers.ModelSerializer):
 
-class LocationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Location
+        model = models.Category
         fields = (
-            'id', 'lat', 'lon', 'address', 'description', 'region'
+            'id','name', 'order'
         )
 
 
-class PartnerApplicationObjectSerializer(serializers.ModelSerializer):
-
-    location = LocationSerializer(write_only=True)
+class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = PartnerApplicationObject
+        model = models.Product
         fields = (
-            'id', 'type', 'floor', 'area', 'price', 'rent', 'location'
+            'id' ,'name', 'image', 'description', 'price', 'category'
         )
 
-    def create(self, validated_data):
-        location_data = validated_data.pop('location')
-        location = Location.objects.create(**location_data)
-        validated_data['location'] = location
 
-        return super().create(validated_data)
+class CategoryProductMixedSerializer(serializers.ModelSerializer):
+    products = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Category
+        fields = (
+            'id', 'name', 'order', 'products'
+        )
+
+
+    def get_products(self, obj):
+        queryset = models.Product.objects.filter(
+            category=obj
+        )
+        serializer = ProductSerializer(queryset, many=True)
+        return serializer.data
+
+
+class NewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.New
+        fields = (
+            'id', 'title', 'poster', 'body'
+        )
+
+
+class AboutUsSerializer(serializers.ModelSerializer):
+    model = models.AboutUs
+    field = (
+        'id', 'title', 'poster', 'body'
+    )
+
+
+class FAQSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.FAQ
+        fields = (
+            'id', 'question', 'answer'
+        )
+
+
+class AboutU(serializers.ModelSerializer):
+    model = models.AboutUs
+    fields = (
+        'id', 'key', 'value'
+    )
