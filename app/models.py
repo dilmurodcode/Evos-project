@@ -104,11 +104,11 @@ class Vacancy(models.Model):
 
 class VacancyApplication(models.Model):
     full_name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255, unique=True)
     cv = models.FileField(upload_to="obj_cv/")
     vacancy = models.ForeignKey(
         Vacancy, on_delete=models.CASCADE,
-        related_name='vacancyApplication', null=True, blank=True
+        related_name='vacancy_applications', null=True, blank=True
     )
 
 
@@ -158,7 +158,7 @@ class OrderProduct(models.Model):
     )
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE,
-        related_name='order', null=True, blank=True
+        related_name='orders', null=True, blank=True
     )
     amount = models.CharField(max_length=255)
 

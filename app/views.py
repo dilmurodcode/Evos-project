@@ -1,3 +1,5 @@
+import re
+
 from rest_framework import generics
 from . import models
 from . import serializers
@@ -97,6 +99,16 @@ class UserCreateAPIView(generics.CreateAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
 
+    def post(self, request, *args, **kwargs):
+        full_name = self.request.data.get('full_name')
+
+        if not re.fullmatch(r"[A-Za-zÀ-ÿ\s'-]+", full_name):
+            return Response(
+                data={"full_name": "Full_name incorrect"},
+                status=400
+            )
+        return super().post(request, *args, **kwargs)
+
 
 class UserLocationAPIView(generics.ListAPIView):
     queryset = models.UserLocation.objects.all().select_related('user')
@@ -113,3 +125,37 @@ class VacancyAPIView(generics.ListAPIView):
     serializer_class = serializers.VacancySerializer
 
 
+class VacancyApplicationAPIView(generics.CreateAPIView):
+    queryset = models.VacancyApplication.objects.all()
+    serializer_class = serializers.VacancyApplicationSerializer
+
+    def post(self, request, *args, **kwargs):
+        full_name = self.request.data.get('full_name')
+
+        if not re.fullmatch(r"[A-Za-zÀ-ÿ\s'-]+", full_name):
+            return Response(
+                data={"full_name": "Full name incorrect"},
+                status=400
+            )
+        return super().post(request, *args, **kwargs)
+
+
+class VacancyVacancyApplicationMixedAPIView(generics.ListAPIView):
+    queryset = models.Vacancy.objects.all().prefetch_related('vacancy_applications')
+    serializer_class = serializers.VacancyVacancyApplicationMixedSerializer
+
+
+
+class CareerAPIView(generics.ListAPIView):
+    queryset = models.Career.objects.all()
+    serializer_class = serializers.CareerSerializer
+
+
+class OrderProductAPIView(generics.ListAPIView):
+    queryset = models.Order.objects.all().prefetch_related('order')
+    serializer_class = serializers.OrderProductSerializer
+
+
+class CertificateAPIView(generics.ListAPIView):
+    queryset = models.Certificate.objects.all().order_by('-id')
+    serializer_class = serializers.CertificateSerializer

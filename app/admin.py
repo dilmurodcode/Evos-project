@@ -39,12 +39,12 @@ class AdminUserCard(admin.ModelAdmin):
 
 @admin.register(Vacancy)
 class AdminVacancy(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id', 'title', 'description', 'body')
 
 
 @admin.register(VacancyApplication)
 class AdminVacancyApplication(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id', 'full_name', 'phone', 'cv', 'vacancy')
 
 
 @admin.register(Category)
@@ -76,7 +76,7 @@ class AdminBranch(admin.ModelAdmin):
 
 @admin.register(Career)
 class AdminCareer(admin.ModelAdmin):
-    list_display = ('id',)
+    list_display = ('id', 'name', 'photo', 'text')
 
 
 @admin.register(New)
@@ -106,4 +106,4 @@ class AdminAboutUS(admin.ModelAdmin):
 
 @admin.register(Certificate)
 class AdminCertificate(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id', 'title', 'image')

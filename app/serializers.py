@@ -156,7 +156,68 @@ class VacancySerializer(ModelSerializer):
         )
 
 
+class VacancyApplicationSerializer(ModelSerializer):
 
+    class Meta:
+        model = models.VacancyApplication
+        fields = (
+            'id', 'full_name', 'phone', 'cv', 'vacancy'
+        )
+
+    def validate_phone(self, phone):
+        pattern = r'^\+998(99|88|33|91|90|94|93)\d{7}$'
+        if not re.match(pattern, phone):
+            raise ValidationError({"phone": "Phone incorrect"})
+        return phone
+
+
+class VacancyVacancyApplicationMixedSerializer(ModelSerializer):
+    vacancy_applications = VacancyApplicationSerializer(many=True)
+
+    class Meta:
+        model = models.Vacancy
+        fields = (
+            'id', 'title', 'description', 'body','vacancy_applications'
+        )
+
+
+
+class CareerSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.Career
+        fields = (
+            'id', 'photo', 'text'
+        )
+
+
+class OrderSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.Order
+        fields = (
+            'id', 'amount', 'status'
+        )
+
+
+
+class OrderProductSerializer(ModelSerializer):
+    orders = OrderSerializer(many=True)
+
+    class Meta:
+        model = models.Order
+        fields = (
+            'id', 'user', 'amount', 'status','orders'
+        )
+
+
+class CertificateSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.Certificate
+        fields = (
+            'id', 'title', 'image'
+        )
 
 
 

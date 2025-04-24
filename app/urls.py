@@ -17,6 +17,12 @@ urlpatterns = [
     path('user-create/', views.UserCreateAPIView.as_view()),
     path('user-location-list/', views.UserLocationAPIView.as_view()),
     path('user-card-list/', views.UserCardAPIView.as_view()),
+    path('vacancy-application-create/', views.VacancyApplicationAPIView.as_view()),
+    path('vacancy-application-list/', views.VacancyVacancyApplicationMixedAPIView.as_view()),
+    path('career-list/', views.CareerAPIView.as_view()),
+    path('order-product-list/', views.OrderProductAPIView.as_view()),
+    path('certificate-list/', views.CertificateAPIView.as_view()),
+
 
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
