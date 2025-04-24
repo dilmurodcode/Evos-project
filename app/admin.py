@@ -24,12 +24,12 @@ class AdminCertificate(admin.ModelAdmin):
 
 @admin.register(User)
 class AdminUser(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id', 'full_name', 'phone')
 
 
 @admin.register(UserLocation)
 class AdminUserLocation(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id', 'lat', 'lon', 'address', 'user')
 
 
 @admin.register(UserCard)
@@ -70,12 +70,13 @@ class AdminOrderProduct(admin.ModelAdmin):
 
 @admin.register(Branch)
 class AdminBranch(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id', 'name', 'order', 'duration', 'address', 'lon', 'lat')
+    list_filter = ('name', )
 
 
 @admin.register(Career)
 class AdminCareer(admin.ModelAdmin):
-    list_display = 'id',
+    list_display = ('id',)
 
 
 @admin.register(New)

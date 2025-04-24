@@ -5,6 +5,20 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 
+class ApplicationObjectCreateAPIView(generics.CreateAPIView):
+    queryset = models.PartnerApplicationObject.objects.all()
+    serializer_class = serializers.PartnerApplicationObjectSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer= self.serializer_class(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        instance = serializer.save()
+
+        return Response('success')
+
+
 class CategoryAPIView(generics.ListAPIView):
     queryset = models.Category.objects.all().order_by('order')
     serializer_class = serializers.CategorySerializer
@@ -25,7 +39,7 @@ class ProductAPIView(generics.ListAPIView):
 
 
 class CategoryProductMixedAPIView(generics.ListAPIView):
-    queryset = models.Category.objects.all().order_by('order')
+    queryset = models.Category.objects.all().prefetch_related('products')
     serializer_class = serializers.CategoryProductMixedSerializer
     pagination_class = None
 
@@ -65,3 +79,37 @@ class FeedbackAPIView(generics.ListAPIView):
 class FAQAPIView(generics.ListCreateAPIView):
     queryset = models.FAQ.objects.all()
     serializer_class = serializers.FAQSerializer
+
+
+
+class BranchAPIView(generics.ListAPIView):
+    serializer_class = serializers.BranchSerializer
+
+
+    def get_queryset(self):
+        name = self.request.query_params.get('name', None)
+        kw = {"name": name} if name else {}
+        return models.Branch.objects.filter(**kw).order_by('-order')
+
+
+
+class UserCreateAPIView(generics.CreateAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer
+
+
+class UserLocationAPIView(generics.ListAPIView):
+    queryset = models.UserLocation.objects.all().select_related('user')
+    serializer_class = serializers.UserLocationSerializer
+
+
+class UserCardAPIView(generics.ListAPIView):
+    queryset = models.UserCard.objects.all()
+    serializer_class = serializers.UserCardSerializer
+
+
+class VacancyAPIView(generics.ListAPIView):
+    queryset = models.Vacancy.objects.all()
+    serializer_class = serializers.VacancySerializer
+
+

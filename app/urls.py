@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from drf_spectacular.views  import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+
 
 urlpatterns = [
     path('category-list/', views.CategoryAPIView.as_view()),
@@ -9,5 +11,15 @@ urlpatterns = [
     path('about-us-list/', views.AboutUsAPIView.as_view()),
     path('user-email-create/', views.UserEmailAPIView.as_view()),
     path('feedback-list/', views.FeedbackAPIView.as_view()),
-    path('faq-list/', views.FAQAPIView.as_view())
+    path('faq-list/', views.FAQAPIView.as_view()),
+    path('app-object/', views.ApplicationObjectCreateAPIView.as_view()),
+    path('branch-list/', views.BranchAPIView.as_view()),
+    path('user-create/', views.UserCreateAPIView.as_view()),
+    path('user-location-list/', views.UserLocationAPIView.as_view()),
+    path('user-card-list/', views.UserCardAPIView.as_view()),
+
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]

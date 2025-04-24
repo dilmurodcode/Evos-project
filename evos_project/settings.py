@@ -1,16 +1,14 @@
 import os
 from pathlib import Path
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
 
 SECRET_KEY = 'django-insecure-+tr)#sz181cz8_8#%f+xpv9@=wkrwablvd@d^8p2=*_-k$s9&x'
 
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 
 INSTALLED_APPS = [
@@ -24,6 +22,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     'app',
+
+    'ckeditor'
 ]
 
 
@@ -31,6 +31,7 @@ REST_FRAMEWORK = {
    'DEFAULT_SCHEMA_CLASS' : 'drf_spectacular.openapi.AutoSchema'
 }
 
+CKEDITOR_UPLOAD_PATH = 'content/ckeditor/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

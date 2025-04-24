@@ -1,4 +1,6 @@
 from django.db import models
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class PartnerApplication(models.Model):
 
@@ -26,7 +28,7 @@ class Location(models.Model):
         ('namangan', 'NAMANGAN'),
         ('jizzax', 'JIZZAX'),
         ('sirdaryo', 'SIRDARYO'),
-        ('surxandaryo', 'SURXANDARYO'),
+        ('surhandaryo', 'SURXANDARYO'),
         ('qashqadaryo', 'QASHQADARYO'),
         ('xorazm', 'XORAZM'),
     ]
@@ -34,8 +36,11 @@ class Location(models.Model):
     lat = models.CharField(max_length=255)
     lon = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    description = RichTextField()
     region = models.CharField(max_length=20, choices=REGION_CHOICES)
+
+    def __str__(self):
+        return self.region
 
 
 class PartnerApplicationObject(models.Model):
@@ -67,7 +72,10 @@ class PartnerApplicationObjectImage(models.Model):
 
 class User(models.Model):
     full_name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.full_name
 
 
 class UserLocation(models.Model):
@@ -76,7 +84,7 @@ class UserLocation(models.Model):
     address = models.CharField(max_length=255)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE,
-        related_name='userLoc', null=True, blank=True
+        related_name='user_locations', null=True, blank=True
     )
 
 
@@ -84,13 +92,13 @@ class UserCard(models.Model):
     user = models.CharField(max_length=255)
     card_ud = models.CharField(max_length=255)
     card_en = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    description = RichTextField()
     status = models.CharField(max_length=255)
 
 
 class Vacancy(models.Model):
     title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    description = RichTextField()
     body = models.CharField(max_length=255)
 
 
@@ -127,14 +135,20 @@ class Product(models.Model):
     discount_price = models.CharField(max_length=255)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE,
-        related_name='product', null=True, blank=True
+        related_name='products', null=True, blank=True
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Order(models.Model):
     user = models.CharField(max_length=255)
     amount = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.user
 
 
 class OrderProduct(models.Model):

@@ -1,7 +1,36 @@
 from . import models
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
+from rest_framework.validators import ValidationError
+import re
 
-class CategorySerializer(serializers.ModelSerializer):
+
+class LocationSerializer(ModelSerializer):
+    class Meta:
+        model = models.Location
+        fields = (
+            'id', 'lat', 'lon', 'address', 'description', 'region'
+        )
+
+
+class PartnerApplicationObjectSerializer(ModelSerializer):
+
+    location = LocationSerializer(write_only=True)
+
+    class Meta:
+        model = models.PartnerApplicationObject
+        fields = (
+            'id', 'type', 'floor', 'area', 'price', 'rent', 'location'
+        )
+
+    def create(self, validated_data):
+        location_data = validated_data.pop('location')
+        location = models.Location.objects.create(**location_data)
+        validated_data['location'] = location
+
+        return super().create(validated_data)
+
+
+class CategorySerializer(ModelSerializer):
 
     class Meta:
         model = models.Category
@@ -10,7 +39,7 @@ class CategorySerializer(serializers.ModelSerializer):
         )
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(ModelSerializer):
 
     class Meta:
         model = models.Product
@@ -19,8 +48,8 @@ class ProductSerializer(serializers.ModelSerializer):
         )
 
 
-class CategoryProductMixedSerializer(serializers.ModelSerializer):
-    products = serializers.SerializerMethodField()
+class CategoryProductMixedSerializer(ModelSerializer):
+    products = ProductSerializer(many=True)
 
     class Meta:
         model = models.Category
@@ -29,15 +58,7 @@ class CategoryProductMixedSerializer(serializers.ModelSerializer):
         )
 
 
-    def get_products(self, obj):
-        queryset = models.Product.objects.filter(
-            category=obj
-        )
-        serializer = ProductSerializer(queryset, many=True)
-        return serializer.data
-
-
-class NewSerializer(serializers.ModelSerializer):
+class NewSerializer(ModelSerializer):
 
     class Meta:
         model = models.New
@@ -46,7 +67,7 @@ class NewSerializer(serializers.ModelSerializer):
         )
 
 
-class AboutUsSerializer(serializers.ModelSerializer):
+class AboutUsSerializer(ModelSerializer):
 
     class Meta:
         model = models.AboutUs
@@ -56,7 +77,7 @@ class AboutUsSerializer(serializers.ModelSerializer):
 
 
 
-class UserEmailSerializer(serializers.ModelSerializer):
+class UserEmailSerializer(ModelSerializer):
 
     class Meta:
         model = models.UserEmail
@@ -65,7 +86,7 @@ class UserEmailSerializer(serializers.ModelSerializer):
         )
 
 
-class FeedbackSerializer(serializers.ModelSerializer):
+class FeedbackSerializer(ModelSerializer):
 
     class Meta:
         model = models.Feedback
@@ -74,12 +95,68 @@ class FeedbackSerializer(serializers.ModelSerializer):
         )
 
 
-class FAQSerializer(serializers.ModelSerializer):
+class FAQSerializer(ModelSerializer):
 
     class Meta:
         model = models.FAQ
         fields = (
             'id', 'question', 'answer'
         )
+
+
+class BranchSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.Branch
+        fields = (
+            'id', 'name', 'order', 'image', 'duration', 'address', 'lat', 'lon'
+        )
+
+
+class UserSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.User
+        fields = (
+            'id', 'full_name', 'phone'
+        )
+
+    def validate_phone(self, phone):
+        pattern = r'^\+998(99|88|33|91|90|94|93)\d{7}$'
+        if not re.match(pattern, phone):
+            raise ValidationError({"phone": "Phone incorrect"})
+        return phone
+
+
+class UserLocationSerializer(ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = models.UserLocation
+        fields = (
+            'id', 'lat', 'lon', 'address', 'user'
+        )
+
+
+class UserCardSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.UserCard
+        fields = (
+            'id', 'user', 'card_ud', 'card_en', 'description', 'status'
+        )
+
+
+class VacancySerializer(ModelSerializer):
+
+    class Meta:
+        model = models.Vacancy
+        fields = (
+            'id', 'title', 'description', 'body'
+        )
+
+
+
+
 
 
