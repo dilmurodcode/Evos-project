@@ -202,13 +202,20 @@ class OrderSerializer(ModelSerializer):
 
 
 class OrderProductSerializer(ModelSerializer):
-    orders = OrderSerializer(many=True)
+    class Meta:
+        model = models.OrderProduct
+        fields = (
+            'id', 'product', 'order', 'amount'
+        )
+
+
+class OrderOrderProductMixedSerializer(ModelSerializer):
+    order_products = ProductSerializer(source='product')
+    orders = OrderSerializer(source='order')
 
     class Meta:
-        model = models.Order
-        fields = (
-            'id', 'user', 'amount', 'status','orders'
-        )
+        model = models.OrderProduct
+        fields = ('id', 'order', 'product', 'amount', 'order_products', 'orders')
 
 
 class CertificateSerializer(ModelSerializer):

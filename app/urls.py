@@ -20,7 +20,7 @@ urlpatterns = [
     path('vacancy-application-create/', views.VacancyApplicationAPIView.as_view()),
     path('vacancy-application-list/', views.VacancyVacancyApplicationMixedAPIView.as_view()),
     path('career-list/', views.CareerAPIView.as_view()),
-    path('order-product-list/', views.OrderProductAPIView.as_view()),
+    path('order-product-list/', views.OrderOrderProductMixedAPIView.as_view()),
     path('certificate-list/', views.CertificateAPIView.as_view()),
 
 

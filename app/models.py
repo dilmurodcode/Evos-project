@@ -1,6 +1,5 @@
 from django.db import models
 from ckeditor.fields import RichTextField
-from ckeditor_uploader.fields import RichTextUploadingField
 
 class PartnerApplication(models.Model):
 
@@ -154,7 +153,7 @@ class Order(models.Model):
 class OrderProduct(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE,
-        related_name='orderProduct', null=True, blank=True
+        related_name='order_products', null=True, blank=True
     )
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE,

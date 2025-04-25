@@ -1,5 +1,4 @@
 import re
-
 from rest_framework import generics
 from . import models
 from . import serializers
@@ -151,9 +150,9 @@ class CareerAPIView(generics.ListAPIView):
     serializer_class = serializers.CareerSerializer
 
 
-class OrderProductAPIView(generics.ListAPIView):
-    queryset = models.Order.objects.all().prefetch_related('order')
-    serializer_class = serializers.OrderProductSerializer
+class OrderOrderProductMixedAPIView(generics.ListAPIView):
+    queryset = models.OrderProduct.objects.select_related('order', 'product')
+    serializer_class = serializers.OrderOrderProductMixedSerializer
 
 
 class CertificateAPIView(generics.ListAPIView):
