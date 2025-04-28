@@ -22,7 +22,7 @@ urlpatterns = [
     path('career-list/', views.CareerAPIView.as_view()),
     path('order-product-list/', views.OrderOrderProductMixedAPIView.as_view()),
     path('certificate-list/', views.CertificateAPIView.as_view()),
-
+    
 
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
