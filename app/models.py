@@ -29,7 +29,7 @@ class Location(models.Model):
         ('sirdaryo', 'SIRDARYO'),
         ('surhandaryo', 'SURXANDARYO'),
         ('qashqadaryo', 'QASHQADARYO'),
-        ('xorazm', 'XORAZM'),
+        ('xorazm', 'XORAZM')
     ]
 
     lat = models.CharField(max_length=255)
@@ -115,7 +115,6 @@ class Career(models.Model):
     name = models.CharField(max_length=255)
     photo = models.ImageField(upload_to='obj_images/')
     text = models.CharField(max_length=255)
-
 
 
 class Category(models.Model):

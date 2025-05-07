@@ -144,7 +144,6 @@ class VacancyVacancyApplicationMixedAPIView(generics.ListAPIView):
     serializer_class = serializers.VacancyVacancyApplicationMixedSerializer
 
 
-
 class CareerAPIView(generics.ListAPIView):
     queryset = models.Career.objects.all()
     serializer_class = serializers.CareerSerializer
@@ -155,6 +154,7 @@ class OrderOrderProductMixedAPIView(generics.ListAPIView):
     serializer_class = serializers.OrderOrderProductMixedSerializer
 
 
-class CertificateAPIView(generics.ListAPIView):
-    queryset = models.Certificate.objects.all().order_by('-id')
-    serializer_class = serializers.CertificateSerializer
+
+# class CertificateAPIView(generics.ListAPIView):
+#     queryset = models.Certificate.objects.all().order_by('-id')
+#     serializer_class = serializers.CertificateSerializer
