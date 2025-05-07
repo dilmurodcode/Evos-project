@@ -155,6 +155,6 @@ class OrderOrderProductMixedAPIView(generics.ListAPIView):
 
 
 
-# class CertificateAPIView(generics.ListAPIView):
-#     queryset = models.Certificate.objects.all().order_by('-id')
-#     serializer_class = serializers.CertificateSerializer
+class CertificateAPIView(generics.ListAPIView):
+    queryset = models.Certificate.objects.all().order_by('-id')
+    serializer_class = serializers.CertificateSerializer
